@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import routes from './routes'
 
 const app = express()
@@ -6,5 +6,5 @@ const app = express()
 app.use(routes)
 
 app.listen(3333, () => {
-  console.log('Started the servers🔥')
+  console.log('🔥 Started the server')
 })
