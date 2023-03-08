@@ -9,6 +9,30 @@ export const index = (req: Request, res: Response) => {
   res.json(contacts)
 }
 
+export const store = (req: Request, res: Response) => {
+  const { id, name, email, phone, category_id } = req.body
+
+  if (!name) {
+    return res.status(400).json({ Error: 'Name is required' })
+  }
+
+  const contactExists: Contacts | null = ContactsRepository.findByEmail(email)
+
+  if (contactExists) {
+    return res.status(400).json({ Error: 'This e-mail has already been taken' })
+  }
+
+  const contact = ContactsRepository.create({
+    id,
+    name,
+    email,
+    phone,
+    category_id
+  })
+
+  res.json(contact)
+}
+
 export const show = (req: Request, res: Response) => {
   const { id } = req.params
 
