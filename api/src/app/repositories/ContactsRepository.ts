@@ -51,6 +51,24 @@ export const ContactsRepository = {
     return newContact
   },
 
+  update({ id, name, email, phone, category_id }: Contacts) {
+    const updatedContact = {
+      id,
+      name,
+      email,
+      phone,
+      category_id
+    }
+
+    const updatedContacts = contacts.map((contact) =>
+      contact.id === id ? updatedContact : contact
+    )
+
+    contacts.splice(0, contacts.length, ...updatedContacts)
+
+    return updatedContact
+  },
+
   delete(id: string): Contacts | null {
     const index = contacts.findIndex((contact) => contact.id === id)
     if (index === -1) {

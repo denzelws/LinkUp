@@ -3,7 +3,8 @@ import {
   deleteContact,
   index,
   show,
-  store
+  store,
+  update
 } from './app/controllers/ContactController'
 
 const router = Router()
@@ -11,6 +12,7 @@ const router = Router()
 router.post('/contact', store)
 router.get('/contact', index)
 router.get('/contact/:id', show)
+router.put('/contact/:id', update)
 router.delete('/contact/:id', deleteContact)
 
 export default router
