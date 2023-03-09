@@ -1,7 +1,7 @@
 import { Client } from 'pg'
 import { Contacts } from '../app/repositories/ContactsRepository'
 
-const client = new Client({
+export const client = new Client({
   host: 'localhost',
   port: 5432,
   user: 'root',
@@ -9,11 +9,12 @@ const client = new Client({
   database: 'mycontacts'
 })
 
-client.connect()
-
-export const Query = async (query: string): Promise<Contacts[]> => {
-  const { rows } = await client.query(query)
-  return rows
+export const db = {
+  async query(
+    query: string,
+    values?: (string | number | null)[]
+  ): Promise<Contacts[]> {
+    const { rows } = await client.query(query, values)
+    return rows
+  }
 }
-
-Query('SELECT * FROM contacts').then(console.log)

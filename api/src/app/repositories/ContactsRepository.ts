@@ -1,5 +1,7 @@
 import { v4 } from 'uuid'
 
+import { db } from '../../database'
+
 export type Contacts = {
   id: string
   name: string
@@ -38,17 +40,17 @@ export const ContactsRepository = {
     return contact ? contact : null
   },
 
-  create({ name, email, phone, category_id }: Contacts) {
-    const newContact = {
-      id: v4(),
-      name,
-      email,
-      phone,
-      category_id
-    }
+  async create({ name, email, phone, category_id }: Contacts) {
+    const [row] = await db.query(
+      `
+       INSERT INTO contacts(name, email, phone, category_id)
+       VALUES($1, $2, $3, $4)
+       RETURNING *
+       `,
+      [name, email, phone?.toString() ?? null, category_id]
+    )
 
-    contacts.push(newContact)
-    return newContact
+    return row
   },
 
   update({ id, name, email, phone, category_id }: Contacts) {
