@@ -27,8 +27,10 @@ const contacts = [
 ]
 
 export const ContactsRepository = {
-  findAll(): Contacts[] {
-    return contacts
+  async findAll(): Promise<Contacts[]> {
+    const rows = await db.query('SELECT * FROM contacts')
+
+    return rows
   },
 
   findById(id: string): Contacts | null {
@@ -43,7 +45,7 @@ export const ContactsRepository = {
 
   async create(contact: Contacts) {
     const { name, email, phone, category_id } = contact
-    const result = (await db.query(
+    const row = (await db.query(
       `
        INSERT INTO contacts(name, email, phone, category_id)
        VALUES($1, $2, $3, $4)
@@ -52,8 +54,7 @@ export const ContactsRepository = {
       [name, email, phone as number | null, category_id]
     )) as unknown as QueryResult<Contacts>
 
-    console.log(result)
-    return result
+    return row
   },
 
   update({ id, name, email, phone, category_id }: Contacts) {

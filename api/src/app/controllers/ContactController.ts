@@ -4,8 +4,8 @@ import {
   ContactsRepository
 } from '../repositories/ContactsRepository'
 
-export const index = (req: Request, res: Response) => {
-  const contacts: Contacts[] = ContactsRepository.findAll()
+export const index = async (req: Request, res: Response): Promise<void> => {
+  const contacts: Contacts[] = await ContactsRepository.findAll()
   res.json(contacts)
 }
 
