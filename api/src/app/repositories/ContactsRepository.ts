@@ -27,8 +27,11 @@ const contacts = [
 ]
 
 export const ContactsRepository = {
-  async findAll(): Promise<Contacts[]> {
-    const rows = await db.query('SELECT * FROM contacts')
+  async findAll(orderBy: 'ASC' | 'DESC'): Promise<Contacts[]> {
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC'
+    const rows = await db.query(
+      `SELECT * FROM contacts ORDER BY name ${direction}`
+    )
 
     return rows
   },

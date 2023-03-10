@@ -5,7 +5,15 @@ import {
 } from '../repositories/ContactsRepository'
 
 export const index = async (req: Request, res: Response): Promise<void> => {
-  const contacts: Contacts[] = await ContactsRepository.findAll()
+  const { orderBy } = req.query
+
+  let orderDirection: 'ASC' | 'DESC' = 'ASC'
+
+  if (typeof orderBy === 'string' && orderBy.match(/^(asc|desc)$/i)) {
+    orderDirection = orderBy.toUpperCase() as 'ASC' | 'DESC'
+  }
+
+  const contacts: Contacts[] = await ContactsRepository.findAll(orderDirection)
   res.json(contacts)
 }
 
