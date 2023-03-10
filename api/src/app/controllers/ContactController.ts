@@ -9,7 +9,7 @@ export const index = (req: Request, res: Response) => {
   res.json(contacts)
 }
 
-export const store = (req: Request, res: Response) => {
+export const store = async (req: Request, res: Response) => {
   const { id, name, email, phone, category_id } = req.body
 
   if (!name) {
@@ -22,7 +22,7 @@ export const store = (req: Request, res: Response) => {
     return res.status(400).json({ Error: 'This e-mail is already in use' })
   }
 
-  const contact = ContactsRepository.create({
+  const contact = await ContactsRepository.create({
     id,
     name,
     email,
@@ -30,7 +30,7 @@ export const store = (req: Request, res: Response) => {
     category_id
   })
 
-  res.json(contact)
+  return res.json(contact)
 }
 
 export const show = (req: Request, res: Response) => {

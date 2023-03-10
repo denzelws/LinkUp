@@ -1,3 +1,4 @@
+import { QueryResult } from 'pg'
 import { v4 } from 'uuid'
 
 import { db } from '../../database'
@@ -6,7 +7,7 @@ export type Contacts = {
   id: string
   name: string
   email: string
-  phone?: number
+  phone?: number | null
   category_id: string
 }
 
@@ -40,17 +41,19 @@ export const ContactsRepository = {
     return contact ? contact : null
   },
 
-  async create({ name, email, phone, category_id }: Contacts) {
-    const [row] = await db.query(
+  async create(contact: Contacts) {
+    const { name, email, phone, category_id } = contact
+    const result = (await db.query(
       `
        INSERT INTO contacts(name, email, phone, category_id)
        VALUES($1, $2, $3, $4)
        RETURNING *
        `,
-      [name, email, phone?.toString() ?? null, category_id]
-    )
+      [name, email, phone as number | null, category_id]
+    )) as unknown as QueryResult<Contacts>
 
-    return row
+    console.log(result)
+    return result
   },
 
   update({ id, name, email, phone, category_id }: Contacts) {
