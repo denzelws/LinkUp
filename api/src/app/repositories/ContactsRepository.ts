@@ -33,14 +33,18 @@ export const ContactsRepository = {
     return rows
   },
 
-  findById(id: string): Contacts | null {
-    const contact = contacts.find((contact) => contact.id === id)
-    return contact ? contact : null
+  async findById(id: string): Promise<Contacts[]> {
+    const row = await db.query('SELECT * FROM contacts WHERE id = $1', [id])
+
+    return row
   },
 
-  findByEmail(email: string): Contacts | null {
-    const contact = contacts.find((contact) => contact.email === email)
-    return contact ? contact : null
+  async findByEmail(email: string): Promise<Contacts[]> {
+    const row = await db.query('SELECT * FROM contacts WHERE email = $1', [
+      email
+    ])
+
+    return row
   },
 
   async create(contact: Contacts) {
