@@ -64,22 +64,17 @@ export const ContactsRepository = {
     return row
   },
 
-  update({ id, name, email, phone, category_id }: Contacts) {
-    const updatedContact = {
-      id,
-      name,
-      email,
-      phone,
-      category_id
-    }
-
-    const updatedContacts = contacts.map((contact) =>
-      contact.id === id ? updatedContact : contact
+  async update({ id, name, email, phone, category_id }: Contacts) {
+    const row = await db.query(
+      `
+     UDPATE contacts
+     SET name = $1, email = $2, phone = $3, category_id = $4
+     WHERE id = $5
+     `,
+      [name, email, phone as number | null, category_id, id]
     )
 
-    contacts.splice(0, contacts.length, ...updatedContacts)
-
-    return updatedContact
+    return row
   },
 
   delete(id: string): Contacts | null {
