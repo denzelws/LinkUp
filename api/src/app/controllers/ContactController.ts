@@ -24,9 +24,11 @@ export const store = async (req: Request, res: Response) => {
     return res.status(400).json({ Error: 'Name is required' })
   }
 
-  const contactExists: Contacts[] = await ContactsRepository.findByEmail(email)
+  const contactExists: Contacts | null = await ContactsRepository.findByEmail(
+    email
+  )
 
-  if (contactExists.length > 0) {
+  if (contactExists) {
     return res.status(400).json({ Error: 'This e-mail is already in use' })
   }
 
@@ -44,7 +46,7 @@ export const store = async (req: Request, res: Response) => {
 export const show = async (req: Request, res: Response) => {
   const { id } = req.params
 
-  const contact: Contacts[] = await ContactsRepository.findById(id)
+  const contact: Contacts | null = await ContactsRepository.findById(id)
 
   if (!contact) {
     return res.status(404).json({ error: 'User not found' })
@@ -85,15 +87,15 @@ export const update = async (req: Request, res: Response) => {
   res.json(contact)
 }
 
-export const deleteContact = async (req: Request, res: Response) => {
-  const { id } = req.params
+// export const deleteContact = async (req: Request, res: Response) => {
+//   const { id } = req.params
 
-  const contact: Contacts[] = await ContactsRepository.findById(id)
+//   const contact: Contacts[] = await ContactsRepository.findById(id)
 
-  if (!contact) {
-    return res.status(404).json({ error: 'User not found' })
-  }
+//   if (!contact) {
+//     return res.status(404).json({ error: 'User not found' })
+//   }
 
-  ContactsRepository.delete(id)
-  res.sendStatus(204)
-}
+//   ContactsRepository.delete(id)
+//   res.sendStatus(204)
+// }

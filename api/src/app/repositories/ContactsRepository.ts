@@ -36,18 +36,17 @@ export const ContactsRepository = {
     return rows
   },
 
-  async findById(id: string): Promise<Contacts[]> {
+  async findById(id: string): Promise<Contacts | null> {
     const row = await db.query('SELECT * FROM contacts WHERE id = $1', [id])
-
-    return row
+    return row.length ? row[0] : null
   },
 
-  async findByEmail(email: string): Promise<Contacts[]> {
+  async findByEmail(email: string): Promise<Contacts | null> {
     const row = await db.query('SELECT * FROM contacts WHERE email = $1', [
       email
     ])
 
-    return row
+    return row.length ? row[0] : null
   },
 
   async create(contact: Contacts) {
@@ -67,9 +66,10 @@ export const ContactsRepository = {
   async update({ id, name, email, phone, category_id }: Contacts) {
     const row = await db.query(
       `
-     UDPATE contacts
+     UPDATE contacts
      SET name = $1, email = $2, phone = $3, category_id = $4
      WHERE id = $5
+     RETURNING *
      `,
       [name, email, phone as number | null, category_id, id]
     )
