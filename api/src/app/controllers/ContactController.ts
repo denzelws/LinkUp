@@ -87,15 +87,10 @@ export const update = async (req: Request, res: Response) => {
   res.json(contact)
 }
 
-// export const deleteContact = async (req: Request, res: Response) => {
-//   const { id } = req.params
+export const deleteContact = async (req: Request, res: Response) => {
+  const { id } = req.params
 
-//   const contact: Contacts[] = await ContactsRepository.findById(id)
+  await ContactsRepository.delete(id)
 
-//   if (!contact) {
-//     return res.status(404).json({ error: 'User not found' })
-//   }
-
-//   ContactsRepository.delete(id)
-//   res.sendStatus(204)
-// }
+  res.sendStatus(204)
+}

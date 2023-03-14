@@ -1,5 +1,4 @@
 import { QueryResult } from 'pg'
-import { v4 } from 'uuid'
 
 import { db } from '../../database'
 
@@ -10,21 +9,6 @@ export type Contacts = {
   phone?: number | null
   category_id: string
 }
-
-const contacts = [
-  {
-    id: v4(),
-    name: 'john',
-    email: 'teste@gmail.com',
-    category_id: v4()
-  },
-  {
-    id: v4(),
-    name: 'harry',
-    email: 'harry@gmail.com',
-    category_id: v4()
-  }
-]
 
 export const ContactsRepository = {
   async findAll(orderBy: 'ASC' | 'DESC'): Promise<Contacts[]> {
@@ -77,14 +61,9 @@ export const ContactsRepository = {
     return row
   },
 
-  delete(id: string): Contacts | null {
-    const index = contacts.findIndex((contact) => contact.id === id)
-    if (index === -1) {
-      return null
-    } else {
-      const contact = contacts[index]
-      contacts.splice(index, 1)
-      return contact
-    }
+  async delete(id: string): Promise<Contacts[]> {
+    const deleteOp = await db.query('DELETE FROM contacts WHERE id = $1', [id])
+
+    return deleteOp
   }
 }
