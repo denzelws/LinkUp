@@ -33,3 +33,28 @@ export const storeCategory = async (req: Request, res: Response) => {
 
   return res.json(category)
 }
+
+export const updateCategory = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  const { name } = req.body
+
+  if (!name) {
+    return res.status(400).json({ Error: 'User not found ' })
+  }
+
+  const category = await CategoryRepository.update({
+    id,
+    name
+  })
+
+  res.json(category)
+}
+
+export const deleteCategory = async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  await CategoryRepository.delete(id)
+
+  res.sendStatus(204)
+}
