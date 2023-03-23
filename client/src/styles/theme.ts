@@ -1,5 +1,9 @@
 export default {
   font: {
+    family:
+      "Sora,  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+    normal: 400,
+    bold: 600,
     sizes: {
       xsmall: '1.2rem',
       small: '1.4rem',
@@ -11,7 +15,7 @@ export default {
     }
   },
   colors: {
-    primary: '#003580',
+    primary: '#F6F5FC',
     white: '#FAFAFA',
     black: '#030517',
     lightGray: '#EAEAEA',
