@@ -1,19 +1,20 @@
 import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.header`
+  margin-top: 7.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const Logo = styled.h1`
   ${({ theme }) => css`
-    margin-top: 7.4rem;
-    display: flex;
-    justify-content: center;
+    color: ${theme.colors.blue};
+    font-size: 4rem;
 
-    h1 {
-      color: ${theme.colors.blue};
-    }
-
-    > strong {
-      margin-top: 2.5rem;
+    span {
       color: ${theme.colors.red};
-      font-size: ${theme.font.sizes.xxlarge};
     }
   `}
 `

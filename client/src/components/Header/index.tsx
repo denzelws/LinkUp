@@ -1,9 +1,13 @@
+import { Search } from '@styled-icons/material-outlined'
+import TextField from '../TextField'
 import * as S from './styles'
 
 const Header = () => (
   <S.Wrapper>
-    <h1>Note</h1>
-    <strong>Pad</strong>
+    <S.Logo>
+      Note<span>Pad</span>
+    </S.Logo>
+    <TextField icon={<Search />} />
   </S.Wrapper>
 )
 
