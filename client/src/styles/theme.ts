@@ -1,4 +1,7 @@
 export default {
+  grid: {
+    container: '50rem'
+  },
   font: {
     family:
       "Sora,  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
@@ -16,11 +19,12 @@ export default {
   },
   colors: {
     primary: '#F6F5FC',
+    blue: '#023E8A',
     white: '#FAFAFA',
     black: '#030517',
     lightGray: '#EAEAEA',
     gray: '#8F8F8F',
     darkGray: '#2E2F42',
-    red: '#FF6347'
+    red: '#d90429'
   }
 } as const

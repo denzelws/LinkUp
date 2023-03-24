@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from 'styled-components'
+import { Container } from './components/Container'
+import Header from './components/Header'
 
 import App from './pages/App/App'
 
@@ -11,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <App />
+      <Container>
+        <Header />
+      </Container>
     </ThemeProvider>
   </React.StrictMode>
 )
