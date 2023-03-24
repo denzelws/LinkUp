@@ -26,5 +26,14 @@ export default {
     gray: '#8F8F8F',
     darkGray: '#2E2F42',
     red: '#d90429'
+  },
+  spacings: {
+    xxsmall: '0.8rem',
+    xsmall: '1.6rem',
+    small: '2.4rem',
+    medium: '3.2rem',
+    large: '4.0rem',
+    xlarge: '4.8rem',
+    xxlarge: '5.6rem'
   }
 } as const
