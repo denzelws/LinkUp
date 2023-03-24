@@ -1,18 +1,8 @@
 module.exports = {
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/stories.tsx"
-  ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
-  ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-vite"
-  },
-  "features": {
-    "storyStoreV7": true
+  stories: ['../src/components/**/stories.tsx'],
+  addons: ['@storybook/addon-essentials'],
+  webpackFinal: (config) => {
+    config.resolve.modules.push(`${process.cwd()}/src`)
+    return config
   }
 }
