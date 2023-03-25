@@ -7,7 +7,7 @@ const Header = () => (
     <S.Logo>
       Note<span>Pad</span>
     </S.Logo>
-    <TextField icon={<Search />} />
+    <TextField placeholder="Pesquisar contato..." icon={<Search />} />
   </S.Wrapper>
 )
 
