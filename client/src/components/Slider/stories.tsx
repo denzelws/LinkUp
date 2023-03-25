@@ -27,12 +27,11 @@ const verticalSettings: Settings = {
 }
 
 const Slide = styled.div`
-  background-color: gray;
   width: 30rem;
-  padding: 10rem 0;
-  border: 0.1 rem solid red;
-  color: white;
+  border: 0.1rem solid red;
   text-align: center;
+  height: 8rem;
+  padding: 10rem 0;
 `
 
 export const Default: Story = () => (

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from 'styled-components'
+import ContactsList from './components/ContactsList'
 import { Container } from './components/Container'
 import Header from './components/Header'
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <GlobalStyles />
       <Container>
         <Header />
+        <ContactsList />
       </Container>
     </ThemeProvider>
   </React.StrictMode>
