@@ -16,5 +16,23 @@ export default [
     platform: 'Twitter',
     email: 'johnny@gmail.com',
     phone: '333333'
+  },
+  {
+    name: 'Mark',
+    platform: 'Instagram',
+    email: 'mark@gmail.com',
+    phone: '2153463'
+  },
+  {
+    name: 'Marko',
+    platform: 'Instagram',
+    email: 'marko@gmail.com',
+    phone: '7645742'
+  },
+  {
+    name: 'Carl L',
+    platform: 'Twitter',
+    email: 'carl@gmail.com',
+    phone: '7458457'
   }
 ]

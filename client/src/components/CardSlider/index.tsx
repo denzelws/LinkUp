@@ -7,11 +7,11 @@ export type CardSliderProps = {
 }
 
 const settings: SliderSettings = {
-  dots: true,
   arrows: false,
   vertical: true,
   verticalSwiping: true,
-  infinite: false
+  infinite: false,
+  slidesToShow: 3
 }
 
 const CardSlider = ({ items }: CardSliderProps) => (

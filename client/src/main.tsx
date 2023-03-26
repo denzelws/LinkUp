@@ -10,13 +10,15 @@ import App from './pages/App/App'
 import GlobalStyles from './styles/global'
 import theme from './styles/theme'
 
+import cards from './components/CardSlider/mock'
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Container>
         <Header />
-        <ContactsList />
+        <ContactsList items={cards} />
       </Container>
     </ThemeProvider>
   </React.StrictMode>

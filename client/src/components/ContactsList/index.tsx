@@ -1,6 +1,12 @@
+import { CardProps } from '../Card'
+import CardSlider from '../CardSlider'
 import * as S from './styles'
 
-const ContactsList = () => (
+export type ContactsListProps = {
+  items: CardProps[]
+}
+
+const ContactsList = ({ items }: ContactsListProps) => (
   <S.Wrapper>
     <S.Details>
       <S.Contacts>3 contatos</S.Contacts>
@@ -9,11 +15,7 @@ const ContactsList = () => (
 
     <S.CardWrapper>
       <S.Title>Nome</S.Title>
-      <S.CardBox>
-        <S.Card>1</S.Card>
-        <S.Card>2</S.Card>
-        <S.Card>3</S.Card>
-      </S.CardBox>
+      <CardSlider items={items} />
     </S.CardWrapper>
   </S.Wrapper>
 )

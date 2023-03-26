@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { lighten } from 'polished'
 
-export const Wrapper = styled.main`
+export const Wrapper = styled.section`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
@@ -11,10 +11,7 @@ export const Wrapper = styled.main`
     box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.04);
     padding: ${theme.spacings.xsmall};
     border-radius: 0.4rem;
-
-    & + & {
-      margin-top: ${theme.spacings.xsmall};
-    }
+    margin-bottom: ${theme.spacings.xsmall};
   `}
 `
 
