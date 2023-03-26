@@ -23,10 +23,10 @@ const Card = ({ email, platform, phone, name }: CardProps) => (
 
     <S.Actions>
       <S.EditButton>
-        <Edit />
+        <Edit aria-label="Edit contact" />
       </S.EditButton>
       <S.DeleteButton>
-        <Trash />
+        <Trash aria-label="Delete contact" />
       </S.DeleteButton>
     </S.Actions>
   </S.Wrapper>
