@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.header`
   margin-top: 7.4rem;
+  margin-bottom: 4.8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
