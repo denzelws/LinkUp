@@ -1,3 +1,4 @@
+import Button from '../../components/Button'
 import { Container } from '../../components/Container'
 import PageHeader from '../../components/PageHeader'
 
@@ -10,7 +11,8 @@ const NewContact = () => (
     <S.Select>
       <option value="123">Instagram</option>
     </S.Select>
-    <button>Salvar</button>
+    <Button>Salvar alterações</Button>
+    <Button disabled>Salvar alterações</Button>
   </Container>
 )
 
