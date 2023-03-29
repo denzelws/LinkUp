@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import PageHeader from '../../components/PageHeader'
 
+import EditContact from '../../templates/EditContact'
 import Home from '../../templates/Home'
 import NewContact from '../../templates/NewContact'
 
@@ -10,10 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<NewContact />} />
-        <Route
-          path="/edit/:id"
-          element={<PageHeader title="Editar Contato" />}
-        />
+        <Route path="/edit/:id" element={<EditContact />} />
       </Routes>
     </BrowserRouter>
   )

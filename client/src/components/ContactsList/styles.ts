@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { lighten, darken } from 'polished'
+
 export const Wrapper = styled.main`
   ${({ theme }) => css`
     margin-top: ${theme.spacings.medium};
@@ -20,11 +22,25 @@ export const Button = styled.button`
   ${({ theme }) => css`
     margin: 0 ${theme.spacings.xsmall};
     cursor: pointer;
-    border: 0.1rem solid ${theme.colors.blue};
+    border: 0.2rem solid #5061fc;
     border-radius: 0.5rem;
     padding: ${theme.spacings.xxsmall} ${theme.spacings.xsmall};
-    color: ${theme.colors.blue};
+    color: #5061fc;
     font-size: ${theme.font.sizes.small};
+    font-weight: ${theme.font.bold};
+
+    a {
+      text-decoration: none;
+      color: #5061fc;
+    }
+
+    &:hover {
+      background: #5061fc;
+
+      a {
+        color: ${theme.colors.white};
+      }
+    }
   `}
 `
 

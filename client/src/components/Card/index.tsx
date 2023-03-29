@@ -1,5 +1,6 @@
 import { Edit } from '@styled-icons/boxicons-solid'
 import { Trash } from '@styled-icons/octicons'
+import { Link } from 'react-router-dom'
 
 import * as S from './styles'
 
@@ -22,9 +23,11 @@ const Card = ({ email, platform, phone, name }: CardProps) => (
     </S.InfoBox>
 
     <S.Actions>
-      <S.EditButton>
-        <Edit aria-label="Edit contact" />
-      </S.EditButton>
+      <Link to="/edit/:id">
+        <S.EditButton>
+          <Edit aria-label="Edit contact" />
+        </S.EditButton>
+      </Link>
       <S.DeleteButton>
         <Trash aria-label="Delete contact" />
       </S.DeleteButton>

@@ -27,5 +27,8 @@ export const ArrowIcon = styled(ArrowLeftShort)`
 `
 
 export const Title = styled.h1`
-  font-size: 2.4rem;
+  ${({ theme }) => css`
+    margin-bottom: ${theme.spacings.small};
+    font-size: 2.4rem;
+  `}
 `

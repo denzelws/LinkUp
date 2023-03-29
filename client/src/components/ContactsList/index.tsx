@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { CardProps } from '../Card'
 import CardSlider from '../CardSlider'
 import * as S from './styles'
@@ -10,7 +11,9 @@ const ContactsList = ({ items }: ContactsListProps) => (
   <S.Wrapper>
     <S.Details>
       <S.Contacts>3 contatos</S.Contacts>
-      <S.Button>Novo Contato</S.Button>
+      <S.Button>
+        <Link to="/new">Novo Contato</Link>
+      </S.Button>
     </S.Details>
 
     <S.CardWrapper>

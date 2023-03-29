@@ -2,11 +2,11 @@ import { Container } from '../../components/Container'
 import PageHeader from '../../components/PageHeader'
 import ContactForm from '../../components/ContactForm'
 
-const NewContact = () => (
+const EditContact = () => (
   <Container>
-    <PageHeader title="Novo Contato" />
-    <ContactForm buttonLabel="Cadastrar" />
+    <PageHeader title="Editar Contato" />
+    <ContactForm buttonLabel="Salvar alterações" />
   </Container>
 )
 
-export default NewContact
+export default EditContact
