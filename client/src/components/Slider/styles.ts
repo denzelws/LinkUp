@@ -93,6 +93,7 @@ export const Wrapper = styled.section`
   }
   .slick-vertical .slick-slide {
     display: block;
+    position: relative;
 
     height: auto;
 

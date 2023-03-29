@@ -1,5 +1,6 @@
 import { Search } from '@styled-icons/material-outlined'
 import TextField from '../TextField'
+
 import * as S from './styles'
 
 export type HeaderProps = {
@@ -11,6 +12,7 @@ const Header = ({ withoutInput }: HeaderProps) => (
     <S.Logo>
       Note<span>Pad</span>
     </S.Logo>
+
     {!withoutInput && (
       <TextField placeholder="Pesquisar contato..." icon={<Search />} />
     )}
