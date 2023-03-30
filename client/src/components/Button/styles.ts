@@ -1,10 +1,21 @@
-import styled, { css } from 'styled-components'
+import styled, { css, DefaultTheme } from 'styled-components'
 
 import { lighten, darken } from 'polished'
+import { ButtonProps } from '.'
 
-export const Wrapper = styled.button`
-  ${({ theme }) => css`
+export type WrapperProps = Pick<ButtonProps, 'size'>
+
+const wrapperModifiers = {
+  small: (theme: DefaultTheme) => css`
+    padding: 0 ${theme.spacings.xsmall};
+  `,
+  fullWidth: () => css`
     width: 100%;
+  `
+}
+
+export const Wrapper = styled.button<WrapperProps>`
+  ${({ theme, size }) => css`
     height: 5.2rem;
     border: none;
     background: #5061fc;
@@ -28,5 +39,7 @@ export const Wrapper = styled.button`
       background: #ccc;
       cursor: default;
     }
+
+    ${!!size && wrapperModifiers[size](theme)}
   `}
 `

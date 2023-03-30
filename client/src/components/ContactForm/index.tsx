@@ -28,7 +28,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => (
     </FormGroup>
 
     <S.ButtonContainer>
-      <Button type="submit">{buttonLabel}</Button>
+      <Button type="submit" size="fullWidth">
+        {buttonLabel}
+      </Button>
     </S.ButtonContainer>
   </S.WrapperForm>
 )

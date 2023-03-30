@@ -27,7 +27,24 @@ export const ModalContainer = styled.div`
 
 export const ButtonBox = styled.p`
   ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     margin-top: ${theme.spacings.medium};
+
+    button {
+      margin-left: ${theme.spacings.xxsmall};
+    }
+  `}
+`
+
+export const CancelButton = styled.button`
+  ${({ theme }) => css`
+    background: transparent;
+    border: none;
+    color: ${theme.colors.gray};
+    font-size: ${theme.font.sizes.medium};
+    cursor: pointer;
   `}
 `
 

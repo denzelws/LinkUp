@@ -1,17 +1,20 @@
-import { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react'
 import * as S from './styles'
-
-type ButtonTypes =
-  | AnchorHTMLAttributes<HTMLAnchorElement>
-  | ButtonHTMLAttributes<HTMLButtonElement>
 
 export type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
-} & ButtonTypes
+  size?: 'small' | 'fullWidth'
+}
 
-const Button = ({ children, disabled }: ButtonProps) => (
-  <S.Wrapper disabled={disabled}>{children}</S.Wrapper>
+const Button = ({
+  children,
+  disabled,
+  size = 'small',
+  ...props
+}: ButtonProps) => (
+  <S.Wrapper size={size} disabled={disabled} {...props}>
+    {children}
+  </S.Wrapper>
 )
 
 export default Button
