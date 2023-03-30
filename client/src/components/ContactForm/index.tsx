@@ -14,6 +14,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
+  const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,14 +26,27 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     })
   }
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+
+    if (!e.target.value) {
+      setErrors((prevState) => [
+        ...prevState,
+        { field: 'name', message: 'Nome é obrigatório' }
+      ])
+    } else {
+      setErrors((prevState) =>
+        prevState.filter((error) => error.field !== 'name')
+      )
+    }
+  }
+
+  console.log(errors)
+
   return (
     <S.WrapperForm onSubmit={handleSubmit}>
       <FormGroup>
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Nome"
-        />
+        <Input value={name} onChange={handleNameChange} placeholder="Nome" />
       </FormGroup>
 
       <FormGroup>
