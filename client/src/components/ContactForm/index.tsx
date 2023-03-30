@@ -5,6 +5,7 @@ import Button from '../Button'
 
 export type ContactFormProps = {
   buttonLabel: string
+  error?: boolean
 }
 
 const ContactForm = ({ buttonLabel }: ContactFormProps) => (
@@ -13,8 +14,8 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => (
       <Input placeholder="Nome" />
     </FormGroup>
 
-    <FormGroup>
-      <Input placeholder="Email" />
+    <FormGroup error="O formato do e-mail é inválido">
+      <Input placeholder="Email" error />
     </FormGroup>
 
     <FormGroup>
@@ -28,9 +29,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => (
     </FormGroup>
 
     <S.ButtonContainer>
-      <Button type="submit" size="fullWidth">
-        {buttonLabel}
-      </Button>
+      <Button size="fullWidth">{buttonLabel}</Button>
     </S.ButtonContainer>
   </S.WrapperForm>
 )

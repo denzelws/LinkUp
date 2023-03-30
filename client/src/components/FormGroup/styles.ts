@@ -5,5 +5,12 @@ export const Wrapper = styled.div`
     & + & {
       margin-top: ${theme.spacings.xsmall};
     }
+
+    small {
+      display: block;
+      color: ${theme.colors.danger.main};
+      margin-top: ${theme.spacings.xxsmall};
+      font-size: ${theme.font.sizes.xsmall};
+    }
   `}
 `
