@@ -3,7 +3,7 @@ import styled, { css, DefaultTheme } from 'styled-components'
 import { lighten, darken } from 'polished'
 import { ButtonProps } from '.'
 
-export type WrapperProps = Pick<ButtonProps, 'size'>
+export type WrapperProps = Pick<ButtonProps, 'size' | 'danger'>
 
 const wrapperModifiers = {
   small: (theme: DefaultTheme) => css`
@@ -11,11 +11,22 @@ const wrapperModifiers = {
   `,
   fullWidth: () => css`
     width: 100%;
+  `,
+  danger: (theme: DefaultTheme) => css`
+    background: ${theme.colors.danger.main};
+
+    &:hover {
+      background: ${theme.colors.danger.light};
+    }
+
+    &:active {
+      background: ${theme.colors.danger.dark};
+    }
   `
 }
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({ theme, size }) => css`
+  ${({ theme, size, danger }) => css`
     height: 5.2rem;
     border: none;
     background: #5061fc;
@@ -41,5 +52,6 @@ export const Wrapper = styled.button<WrapperProps>`
     }
 
     ${!!size && wrapperModifiers[size](theme)}
+    ${!!danger && wrapperModifiers.danger(theme)}
   `}
 `

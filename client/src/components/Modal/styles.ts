@@ -1,4 +1,7 @@
 import styled, { css } from 'styled-components'
+import { ModalProps } from '.'
+
+import { darken } from 'polished'
 
 export const OverlayBox = styled.div`
   display: flex;
@@ -48,8 +51,13 @@ export const CancelButton = styled.button`
   `}
 `
 
-export const Title = styled.h1`
-  font-size: 2.2rem;
+export const Title = styled.h1<Pick<ModalProps, 'danger'>>`
+  ${({ theme, danger }) => css`
+    font-size: 2.2rem;
+    color: ${danger
+      ? theme.colors.danger.main
+      : darken(0.4, theme.colors.gray)};
+  `}
 `
 
 export const WarningText = styled.p`

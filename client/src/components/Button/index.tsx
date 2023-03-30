@@ -1,10 +1,11 @@
+import { ModalProps } from '../Modal'
 import * as S from './styles'
 
 export type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
   size?: 'small' | 'fullWidth'
-}
+} & ModalProps
 
 const Button = ({
   children,
