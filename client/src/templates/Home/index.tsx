@@ -8,7 +8,7 @@ import Modal from '../../components/Modal'
 const Home = () => (
   <Container>
     <Header />
-    <Modal danger />
+    {/* <Modal danger /> */}
     <ContactsList items={cards} />
   </Container>
 )
