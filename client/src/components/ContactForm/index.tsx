@@ -19,6 +19,10 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
 
   console.log(errors)
 
+  const getErrorMessageByFieldName = (fieldName: string) => {
+    return errors.find((error) => error.field === fieldName)?.message || ''
+  }
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log({
@@ -67,12 +71,22 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
 
   return (
     <S.WrapperForm onSubmit={handleSubmit}>
-      <FormGroup>
-        <Input value={name} onChange={handleNameChange} placeholder="Nome" />
+      <FormGroup error={getErrorMessageByFieldName('name')}>
+        <Input
+          value={name}
+          onChange={handleNameChange}
+          placeholder="Nome"
+          error={!!getErrorMessageByFieldName('name')}
+        />
       </FormGroup>
 
-      <FormGroup>
-        <Input value={email} onChange={handleEmailChange} placeholder="Email" />
+      <FormGroup error={getErrorMessageByFieldName('email')}>
+        <Input
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Email"
+          error={!!getErrorMessageByFieldName('email')}
+        />
       </FormGroup>
 
       <FormGroup>
