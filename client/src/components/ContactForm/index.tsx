@@ -3,6 +3,7 @@ import { Input, Select } from '../../templates/NewContact/styles'
 import * as S from './styles'
 import Button from '../Button'
 import { FormEvent, useState } from 'react'
+import isEmailValid from '../../utils/isEmailValid'
 
 export type ContactFormProps = {
   buttonLabel: string
@@ -15,6 +16,8 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
   const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
+
+  console.log(errors)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -41,7 +44,26 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     }
   }
 
-  console.log(errors)
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+
+    if (e.target.value && !isEmailValid(e.target.value)) {
+      const emailAlreadyExists = errors.find((error) => error.field === 'email')
+
+      if (emailAlreadyExists) {
+        return
+      }
+
+      setErrors((prevState) => [
+        ...prevState,
+        { field: 'email', message: 'E-mail inválido.' }
+      ])
+    } else {
+      setErrors((prevState) =>
+        prevState.filter((error) => error.field !== 'email')
+      )
+    }
+  }
 
   return (
     <S.WrapperForm onSubmit={handleSubmit}>
@@ -50,11 +72,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
       </FormGroup>
 
       <FormGroup>
-        <Input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
+        <Input value={email} onChange={handleEmailChange} placeholder="Email" />
       </FormGroup>
 
       <FormGroup>
