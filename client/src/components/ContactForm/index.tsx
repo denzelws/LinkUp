@@ -1,9 +1,13 @@
-import FormGroup from '../FormGroup'
-import { Input, Select } from '../../templates/NewContact/styles'
-import * as S from './styles'
-import Button from '../Button'
 import { FormEvent, useState } from 'react'
+
+import { useError } from '../../hooks/useError'
+import { Input, Select } from '../../templates/NewContact/styles'
+
+import FormGroup from '../FormGroup'
+import Button from '../Button'
 import isEmailValid from '../../utils/isEmailValid'
+
+import * as S from './styles'
 
 export type ContactFormProps = {
   buttonLabel: string
@@ -15,11 +19,8 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
-  const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
 
-  const getErrorMessageByFieldName = (fieldName: string) => {
-    return errors.find((error) => error.field === fieldName)?.message || ''
-  }
+  const { setError, removeError, getErrorMessageByFieldName } = useError()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,14 +36,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     setName(e.target.value)
 
     if (!e.target.value) {
-      setErrors((prevState) => [
-        ...prevState,
-        { field: 'name', message: 'Nome é obrigatório' }
-      ])
+      setError({ field: 'name', message: 'Nome é obrigatório' })
     } else {
-      setErrors((prevState) =>
-        prevState.filter((error) => error.field !== 'name')
-      )
+      removeError('name')
     }
   }
 
@@ -50,20 +46,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     setEmail(e.target.value)
 
     if (e.target.value && !isEmailValid(e.target.value)) {
-      const emailAlreadyExists = errors.find((error) => error.field === 'email')
-
-      if (emailAlreadyExists) {
-        return
-      }
-
-      setErrors((prevState) => [
-        ...prevState,
-        { field: 'email', message: 'E-mail inválido.' }
-      ])
+      setError({ field: 'email', message: 'E-mail inválido' })
     } else {
-      setErrors((prevState) =>
-        prevState.filter((error) => error.field !== 'email')
-      )
+      removeError('email')
     }
   }
 
