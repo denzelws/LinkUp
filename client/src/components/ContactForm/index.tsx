@@ -17,8 +17,6 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [category, setCategory] = useState('')
   const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
 
-  console.log(errors)
-
   const getErrorMessageByFieldName = (fieldName: string) => {
     return errors.find((error) => error.field === fieldName)?.message || ''
   }
