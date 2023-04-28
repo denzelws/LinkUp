@@ -5,26 +5,32 @@ export type ErrorProps = {
   message: string
 }
 
-export const useError = () => {
+export type HookProps = {
+  setError: ({ field, message }: ErrorProps) => void
+  removeError: (fieldName: string) => void
+  getErrorMessageByFieldName: (fieldName: string) => string
+}
+
+export const useError = (): HookProps => {
   const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
 
-  const emailAlreadyExists = errors.find((error) => error.field === 'email')
+  function setError({ field, message }: ErrorProps) {
+    const emailAlreadyExists = errors.find((error) => error.field === 'email')
 
-  if (emailAlreadyExists) {
-    return
-  }
+    if (emailAlreadyExists) {
+      return
+    }
 
-  const setError = ({ field, message }: ErrorProps) => {
     setErrors((prevState) => [...prevState, { field, message }])
   }
 
-  const removeError = (fieldName: string) => {
+  function removeError(fieldName: string) {
     setErrors((prevState) =>
       prevState.filter((error) => error.field !== fieldName)
     )
   }
 
-  const getErrorMessageByFieldName = (fieldName: string) => {
+  function getErrorMessageByFieldName(fieldName: string) {
     return errors.find((error) => error.field === fieldName)?.message || ''
   }
 
