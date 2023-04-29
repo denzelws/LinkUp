@@ -18,6 +18,7 @@ export const Input = styled.input<Pick<ContactFormProps, 'error'>>`
     transition: border-color 0.2s ease-in-out;
     color: ${error && theme.colors.danger.main};
     border-color: ${error && theme.colors.danger.main} !important;
+    appearance: none;
 
     &:focus {
       border-color: #5061fc;
@@ -39,6 +40,7 @@ export const Select = styled.select`
     font-size: ${theme.font.sizes.medium};
     transition: border-color 0.2s ease-in-out;
     font-family: ${theme.font.family};
+    appearance: none;
 
     &:focus {
       border-color: #5061fc;

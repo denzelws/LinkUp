@@ -6,5 +6,6 @@ export const Container = styled.div`
     position: relative;
     max-width: ${theme.grid.container};
     margin: 0 auto;
+    padding: 0 1.6rem;
   `}
 `
