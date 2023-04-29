@@ -8,6 +8,7 @@ import Button from '../Button'
 import isEmailValid from '../../utils/isEmailValid'
 
 import * as S from './styles'
+import formatPhone from '../../utils/formatPhone'
 
 export type ContactFormProps = {
   buttonLabel: string
@@ -52,6 +53,10 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
     }
   }
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value))
+  }
+
   return (
     <S.WrapperForm onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
@@ -76,8 +81,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
       <FormGroup>
         <Input
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={handlePhoneChange}
           placeholder="Telefone"
+          maxLength={15}
         />
       </FormGroup>
 
