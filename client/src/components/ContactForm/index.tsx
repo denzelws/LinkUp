@@ -53,7 +53,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   }
 
   return (
-    <S.WrapperForm onSubmit={handleSubmit}>
+    <S.WrapperForm onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
           value={name}
@@ -65,6 +65,7 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
 
       <FormGroup error={getErrorMessageByFieldName('email')}>
         <Input
+          type="email"
           value={email}
           onChange={handleEmailChange}
           placeholder="Email"
