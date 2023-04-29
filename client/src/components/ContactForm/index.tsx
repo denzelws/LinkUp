@@ -21,7 +21,10 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
 
-  const { setError, removeError, getErrorMessageByFieldName } = useError()
+  const { errors, setError, removeError, getErrorMessageByFieldName } =
+    useError()
+
+  const isFormValid = name && errors.length === 0
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -96,7 +99,9 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
       </FormGroup>
 
       <S.ButtonContainer>
-        <Button size="fullWidth">{buttonLabel}</Button>
+        <Button size="fullWidth" disabled={!isFormValid}>
+          {buttonLabel}
+        </Button>
       </S.ButtonContainer>
     </S.WrapperForm>
   )

@@ -6,6 +6,7 @@ export type ErrorProps = {
 }
 
 export type HookProps = {
+  errors: { field: string; message: string }[]
   setError: ({ field, message }: ErrorProps) => void
   removeError: (fieldName: string) => void
   getErrorMessageByFieldName: (fieldName: string) => string
@@ -34,5 +35,10 @@ export const useError = (): HookProps => {
     return errors.find((error) => error.field === fieldName)?.message || ''
   }
 
-  return { setError, removeError, getErrorMessageByFieldName }
+  return {
+    errors,
+    setError,
+    removeError,
+    getErrorMessageByFieldName
+  }
 }
