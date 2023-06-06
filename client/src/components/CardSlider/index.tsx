@@ -3,7 +3,7 @@ import Slider, { SliderSettings } from '../Slider'
 import * as S from './styles'
 
 export type CardSliderProps = {
-  items: CardProps[]
+  contacts: CardProps[]
 }
 
 const settings: SliderSettings = {
@@ -14,11 +14,11 @@ const settings: SliderSettings = {
   slidesToShow: 3
 }
 
-const CardSlider = ({ items }: CardSliderProps) => (
+const CardSlider = ({ contacts }: CardSliderProps) => (
   <S.Wrapper>
     <Slider settings={settings}>
-      {items.map((item) => (
-        <Card key={item.name} {...item} />
+      {contacts.map((contact) => (
+        <Card key={contact.id} {...contact} />
       ))}
     </Slider>
   </S.Wrapper>
