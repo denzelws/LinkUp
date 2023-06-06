@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { ArrowLeftShort } from '@styled-icons/bootstrap/ArrowLeftShort'
 
 export const Wrapper = styled.main`
   ${({ theme }) => css`
@@ -47,10 +48,12 @@ export const CardWrapper = styled.div`
   flex-direction: column;
 `
 
-export const Title = styled.h2`
+export const ListHeader = styled.header`
   ${({ theme }) => css`
     color: ${theme.colors.blue};
     font-size: ${theme.font.sizes.large};
+
+    cursor: pointer;
   `}
 `
 
@@ -70,4 +73,19 @@ export const Card = styled.div`
   border: 0.1rem solid red;
   height: 6rem;
   padding: 1.5rem 0;
+`
+
+type IconProps = {
+  orderBy: string
+}
+
+export const ArrowIcon = styled(ArrowLeftShort)<IconProps>`
+  ${({ theme, orderBy }) => css`
+    margin-right: 0.2rem;
+    justify-content: center;
+    width: 3rem;
+    color: ${theme.colors.blue};
+    transform: ${orderBy === 'asc' ? 'rotate(90deg)' : 'rotate(270deg)'};
+    transition: transform 0.2s ease-in;
+  `}
 `
