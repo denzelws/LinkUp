@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import CardSlider from '../CardSlider'
 
 import * as S from './styles'
@@ -13,9 +13,11 @@ const ContactsList = ({ searchTerm }: ContactsListProps) => {
   const [contacts, setContacts] = useState<CardProps[]>([])
   const [orderBy, setOrderBy] = useState('asc')
 
-  const filteredContacts = contacts.filter((contact: CardProps) => {
-    return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  })
+  const filteredContacts = useMemo(() => {
+    return contacts.filter((contact: CardProps) => {
+      return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+  }, [contacts, searchTerm])
 
   useEffect(() => {
     fetch(`http://localhost:3333/contact?orderBy=${orderBy}`)
