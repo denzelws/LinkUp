@@ -4,6 +4,8 @@ import CardSlider from '../CardSlider'
 
 import * as S from './styles'
 import { CardProps } from '../Card'
+import Loader from '../Loader'
+import delay from '../../utils/delay'
 
 type ContactsListProps = {
   searchTerm: string
@@ -12,6 +14,7 @@ type ContactsListProps = {
 const ContactsList = ({ searchTerm }: ContactsListProps) => {
   const [contacts, setContacts] = useState<CardProps[]>([])
   const [orderBy, setOrderBy] = useState('asc')
+  const [isLoading, setIsLoading] = useState(true)
 
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact: CardProps) => {
@@ -20,10 +23,14 @@ const ContactsList = ({ searchTerm }: ContactsListProps) => {
   }, [contacts, searchTerm])
 
   useEffect(() => {
+    setIsLoading(true)
+
     fetch(`http://localhost:3333/contact?orderBy=${orderBy}`)
       .then(async (response) => {
+        await delay(500)
         const json = await response.json()
         setContacts(json)
+        setIsLoading(false)
       })
       .catch((error) => {
         console.log('error', error)
@@ -36,6 +43,7 @@ const ContactsList = ({ searchTerm }: ContactsListProps) => {
 
   return (
     <S.Wrapper>
+      <Loader isLoading={isLoading} />
       <S.Details>
         <S.Contacts>
           {filteredContacts.length}
