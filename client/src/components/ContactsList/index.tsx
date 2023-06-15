@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
+
+import { CardProps } from '../Card'
 import CardSlider from '../CardSlider'
+import Loader from '../Loader'
+import listContacts from '../../services/ContactsService'
 
 import * as S from './styles'
-import { CardProps } from '../Card'
-import Loader from '../Loader'
-import delay from '../../utils/delay'
 
 type ContactsListProps = {
   searchTerm: string
@@ -23,20 +24,20 @@ const ContactsList = ({ searchTerm }: ContactsListProps) => {
   }, [contacts, searchTerm])
 
   useEffect(() => {
-    setIsLoading(true)
+    async function loadContacts() {
+      try {
+        setIsLoading(true)
 
-    fetch(`http://localhost:3333/contact?orderBy=${orderBy}`)
-      .then(async (response) => {
-        await delay(500)
-        const json = await response.json()
-        setContacts(json)
-      })
-      .catch((error) => {
+        const contactsList = await listContacts(orderBy)
+        setContacts(contactsList)
+      } catch (error) {
         console.log('error', error)
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false)
-      })
+      }
+    }
+
+    loadContacts()
   }, [orderBy])
 
   const handleToggleOrderBy = () => {
