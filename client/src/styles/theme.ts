@@ -25,6 +25,7 @@ export default {
     black: '#030517',
     lightGray: '#EAEAEA',
     gray: '#8F8F8F',
+    gray100: '#E5E5E5',
     darkGray: '#2E2F42',
     red: '#d90429',
     danger: {
