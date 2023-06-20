@@ -1,10 +1,12 @@
-import delay from '../utils/delay'
+import { CardProps } from '../components/Card'
+import createHttpClient from './utils/HttpClient'
 
-export default async function listContacts(orderBy = 'asc') {
-  const response = await fetch(
-    `http://localhost:3333/contact?orderBy=${orderBy}`
-  )
+const contactsService = {
+  httpClient: createHttpClient('http://localhost:3333'),
 
-  await delay(500)
-  return response.json()
+  async listContacts(orderBy: string): Promise<CardProps[]> {
+    return this.httpClient.get(`/contact/?orderBy=${orderBy}`)
+  }
 }
+
+export default contactsService
