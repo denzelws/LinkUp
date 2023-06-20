@@ -8,6 +8,7 @@ import Loader from '../Loader'
 import contactsService from '../../services/ContactsService'
 import sadImage from '../../public/img/sad.svg'
 import emptyBox from '../../public/img/emptybox.svg'
+import questionQuery from '../../public/img/query.svg'
 
 import * as S from './styles'
 import Button from '../Button'
@@ -101,6 +102,20 @@ const ContactsList = ({
                 primeiro!
               </S.EmptyText>
             </S.EmptyContainer>
+          )}
+
+          {contacts.length > 0 && filteredContacts.length < 1 && (
+            <S.NotFoundContainer>
+              <S.ImageWrapper>
+                <img
+                  src={questionQuery}
+                  alt="A imagem mostra um icone de pesquisa com um ponto de interrogação"
+                />
+              </S.ImageWrapper>
+              <S.NotFoundMessage>
+                Nao foi encontrado resultados para <strong>{searchTerm}</strong>
+              </S.NotFoundMessage>
+            </S.NotFoundContainer>
           )}
 
           {filteredContacts.length > 0 && (
