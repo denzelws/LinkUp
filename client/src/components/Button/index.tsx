@@ -5,6 +5,7 @@ export type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
   size?: 'small' | 'fullWidth'
+  onClick?: () => void
 } & ModalProps
 
 const Button = ({
