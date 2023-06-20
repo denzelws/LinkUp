@@ -45,5 +45,10 @@ export const Select = styled.select`
     &:focus {
       border-color: #5061fc;
     }
+
+    &[disabled] {
+      background-color: ${theme.colors.gray100};
+      border-color: ${theme.colors.gray};
+    }
   `}
 `

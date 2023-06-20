@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom'
 
 import * as S from './styles'
+import { Spinner } from '../Spinner'
 
 type LoaderProps = {
   isLoading: boolean
@@ -15,7 +16,7 @@ const Loader = ({ isLoading }: LoaderProps) => {
 
   return ReactDOM.createPortal(
     <S.Wrapper>
-      <S.Loading />
+      <Spinner size={90} />
     </S.Wrapper>,
     loaderRoot
   )

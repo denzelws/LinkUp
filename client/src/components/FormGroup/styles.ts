@@ -14,3 +14,13 @@ export const Wrapper = styled.div`
     }
   `}
 `
+
+export const FormItem = styled.div`
+  position: relative;
+`
+
+export const LoaderWrapper = styled.div`
+  position: absolute;
+  right: 1.6rem;
+  top: 1.8rem;
+`
