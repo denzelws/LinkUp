@@ -12,13 +12,15 @@ import formatPhone from '../../utils/formatPhone'
 import categoriesService, {
   CategoriesProps
 } from '../../services/CategoriesService'
+import { CardProps } from '../Card'
 
 export type ContactFormProps = {
   buttonLabel: string
   error?: boolean
+  onSubmit: (formData: CardProps) => void
 }
 
-const ContactForm = ({ buttonLabel }: ContactFormProps) => {
+const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -47,7 +49,8 @@ const ContactForm = ({ buttonLabel }: ContactFormProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log({
+
+    onSubmit({
       name,
       email,
       phone,
