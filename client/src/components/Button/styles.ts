@@ -3,7 +3,7 @@ import styled, { css, DefaultTheme } from 'styled-components'
 import { lighten, darken } from 'polished'
 import { ButtonProps } from '.'
 
-export type WrapperProps = Pick<ButtonProps, 'size' | 'danger'>
+export type WrapperProps = Pick<ButtonProps, 'size' | 'danger' | 'isLoading'>
 
 const wrapperModifiers = {
   small: (theme: DefaultTheme) => css`
@@ -27,6 +27,9 @@ const wrapperModifiers = {
 
 export const Wrapper = styled.button<WrapperProps>`
   ${({ theme, size, danger }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 5.2rem;
     border: none;
     background: #5061fc;
