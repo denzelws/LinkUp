@@ -4,6 +4,8 @@ import {
   ContactsRepository
 } from '../repositories/ContactsRepository'
 
+import isValidUUID from '../utils/isValidUUID'
+
 export const index = async (req: Request, res: Response): Promise<void> => {
   const { orderBy } = req.query
 
@@ -18,33 +20,51 @@ export const index = async (req: Request, res: Response): Promise<void> => {
 }
 
 export const store = async (req: Request, res: Response) => {
-  const { id, name, email, phone, category_id } = req.body
+  const { name, email, phone, category_id } = req.body
+
+  console.log('Received request payload:', req.body)
 
   if (!name) {
+    console.log('Name is missing or empty')
     return res.status(400).json({ Error: 'Name is required' })
   }
 
-  const contactExists: Contacts | null = await ContactsRepository.findByEmail(
-    email
-  )
-
-  if (contactExists) {
-    return res.status(400).json({ Error: 'This e-mail is already in use' })
+  if (category_id && !isValidUUID(category_id)) {
+    console.log('Invalid category')
+    return res.status(400).json({ Error: 'Invalid category' })
   }
 
-  const contact = await ContactsRepository.create({
-    id,
-    name,
-    email,
-    phone,
-    category_id
-  })
+  if (email) {
+    const contactExists = await ContactsRepository.findByEmail(email)
+    if (contactExists) {
+      console.log('Email already exists:', email)
+      return res.status(400).json({ Error: 'This e-mail is already in use' })
+    }
+  }
 
-  return res.json(contact)
+  try {
+    const contact = await ContactsRepository.create({
+      id: '',
+      name,
+      email: email || null,
+      phone,
+      category_id: category_id || null
+    })
+
+    console.log('Contact created:', contact)
+    return res.json(contact)
+  } catch (error) {
+    console.log('Error creating contact:', error)
+    return res.status(500).json({ Error: 'Failed to create contact' })
+  }
 }
 
 export const show = async (req: Request, res: Response) => {
   const { id } = req.params
+
+  if (!isValidUUID(id)) {
+    return res.status(400).json({ error: 'Invalid user id' })
+  }
 
   const contact: Contacts | null = await ContactsRepository.findById(id)
 
@@ -60,6 +80,14 @@ export const update = async (req: Request, res: Response) => {
 
   const { name, email, phone, category_id } = req.body
 
+  if (!isValidUUID(id)) {
+    return res.status(400).json({ error: 'Invalid user id' })
+  }
+
+  if (category_id && !isValidUUID(category_id)) {
+    return res.status(400).json({ error: 'Invalid category' })
+  }
+
   if (!name) {
     return res.status(400).json({ Error: 'User not found ' })
   }
@@ -70,18 +98,19 @@ export const update = async (req: Request, res: Response) => {
     return res.status(400).json({ Error: 'User not found' })
   }
 
-  const contactByEmail = await ContactsRepository.findByEmail(email)
-
-  if (contactByEmail && contactByEmail.id !== id) {
-    return res.status(400).json({ Error: 'This e-mail is already in use' })
+  if (email) {
+    const contactByEmail = await ContactsRepository.findByEmail(email)
+    if (contactByEmail && contactByEmail.id !== id) {
+      return res.status(400).json({ Error: 'This e-mail is already in use' })
+    }
   }
 
   const contact = await ContactsRepository.update({
     id,
     name,
-    email,
+    email: email || null,
     phone,
-    category_id
+    category_id: category_id || null
   })
 
   res.json(contact)
@@ -89,6 +118,10 @@ export const update = async (req: Request, res: Response) => {
 
 export const deleteContact = async (req: Request, res: Response) => {
   const { id } = req.params
+
+  if (!isValidUUID(id)) {
+    return res.status(400).json({ error: 'Invalid user id' })
+  }
 
   await ContactsRepository.delete(id)
 
