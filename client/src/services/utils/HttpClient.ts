@@ -3,39 +3,49 @@ import APIError from '../../errors/ApiError'
 import delay from '../../utils/delay'
 
 type HttpClientProps = {
-  get: (path: string) => Promise<CardProps[]>
-  post: (path: string, body: CardProps) => Promise<CardProps>
+  get: (path: string, options?: OptionsProps) => Promise<CardProps[]>
+  post: (path: string, options?: OptionsProps) => Promise<CardProps>
+}
+
+type OptionsProps = {
+  method?: string
+  body?: CardProps
+  headers?: { [key: string]: string }
 }
 
 function createHttpClient(baseURL: string): HttpClientProps {
-  async function get(path: string): Promise<CardProps[]> {
-    await delay(500)
-    const response = await fetch(`${baseURL}${path}`)
-
-    let body = null
-    const contentType = response.headers.get('Content-Type')
-
-    if (contentType?.includes('application/json')) {
-      body = await response.json()
-    }
-
-    if (response.ok) {
-      return body
-    }
-
-    throw APIError(response, body)
+  function get(path: string, options: OptionsProps = {}): Promise<CardProps[]> {
+    return makeRequest(path, {
+      method: 'GET',
+      headers: options.headers
+    })
   }
 
-  async function post(path: string, body: CardProps): Promise<CardProps> {
+  function post(path: string, options: OptionsProps = {}): Promise<CardProps> {
+    return makeRequest(path, {
+      method: 'POST',
+      ...options
+    })
+  }
+
+  async function makeRequest(path: string, options: OptionsProps) {
     await delay(500)
 
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    })
+    const headers = new Headers()
+
+    if (options.body) {
+      headers.append('Content-Type', 'application/json')
+    }
+
+    if (options.headers) {
+      Object.entries(options.headers).forEach(([name, value]) => {
+        headers.append(name, value)
+      })
+    }
 
     const response = await fetch(`${baseURL}${path}`, {
-      method: 'POST',
-      body: JSON.stringify(body),
+      method: options.method,
+      body: JSON.stringify(options.body),
       headers
     })
 

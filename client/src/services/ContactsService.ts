@@ -9,7 +9,9 @@ const contactsService = {
   },
 
   async createContact(contact: CardProps) {
-    return this.httpClient.post('/contact', contact)
+    return this.httpClient.post('/contact', {
+      body: contact
+    })
   }
 }
 
