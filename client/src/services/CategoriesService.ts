@@ -8,7 +8,7 @@ export type CategoriesProps = {
 const categoriesService = {
   httpClient: createHttpClient('http://localhost:3333'),
 
-  async listCategories(): Promise<CategoriesProps[]> {
+  async listCategories(): Promise<any> {
     return this.httpClient.get('/categories')
   }
 }

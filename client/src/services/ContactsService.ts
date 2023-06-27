@@ -6,6 +6,10 @@ const contactsService = {
 
   async listContacts(orderBy: string): Promise<CardProps[]> {
     return this.httpClient.get(`/contact/?orderBy=${orderBy}`)
+  },
+
+  async createContact(contact: CardProps) {
+    return this.httpClient.post('/contact', contact)
   }
 }
 
