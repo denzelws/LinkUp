@@ -5,11 +5,13 @@ import { ThemeProvider } from 'styled-components'
 import GlobalStyles from './styles/global'
 import theme from './styles/theme'
 import App from './pages/App/App'
+import ToastContainer from './components/Toast/ToastContainer'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
+      <ToastContainer />
       <App />
     </ThemeProvider>
   </React.StrictMode>
