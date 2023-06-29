@@ -1,9 +1,16 @@
 import styled, { css } from 'styled-components'
+import { ToastMessageProps } from '.'
 
-export const Container = styled.div`
-  ${({ theme }) => css`
+type ContainerProps = Pick<ToastMessageProps, 'type'>
+
+export const Container = styled.div<ContainerProps>`
+  ${({ theme, type }) => css`
     padding: ${theme.spacings.xsmall} ${theme.spacings.medium};
-    background: ${theme.colors.primaryMain};
+    background: ${type === 'danger'
+      ? theme.colors.danger.main
+      : type === 'success'
+      ? theme.colors.success.main
+      : theme.colors.primaryMain};
     color: ${theme.colors.white};
     border-radius: 0.4rem;
     box-shadow: 0 2rem 2rem -1.6rem rgba(0, 0, 0, 0.25);
