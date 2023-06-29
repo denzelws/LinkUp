@@ -5,16 +5,20 @@ import { CardProps } from '../../components/Card'
 import contactsService from '../../services/ContactsService'
 
 const NewContact = () => {
-  const handleSubmit = async (formData: CardProps) => {
-    const contact = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      category_id: formData.categoryId
-    }
+  const handleSubmit = async (formData: CardProps): Promise<void> => {
+    try {
+      const contact = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        category_id: formData.categoryId
+      }
 
-    const response = await contactsService.createContact(contact)
-    console.log(response)
+      const response = await contactsService.createContact(contact)
+      console.log(response)
+    } catch {
+      alert('Ocorreu um erro ao cadastrar o contato!')
+    }
   }
   return (
     <Container>

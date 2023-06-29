@@ -23,6 +23,11 @@ export const Input = styled.input<Pick<ContactFormProps, 'error'>>`
     &:focus {
       border-color: #5061fc;
     }
+
+    &[disabled] {
+      background-color: ${theme.colors.gray100};
+      border-color: ${theme.colors.gray};
+    }
   `}
 `
 
@@ -49,6 +54,7 @@ export const Select = styled.select`
     &[disabled] {
       background-color: ${theme.colors.gray100};
       border-color: ${theme.colors.gray};
+      opacity: 1;
     }
   `}
 `
