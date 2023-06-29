@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom'
 import * as S from './styles'
 
 export type CardProps = {
-  id: string
+  id?: string
   name: string
-  platform: string
+  category_name?: string
   email: string
   phone: string
 }
 
-const Card = ({ email, platform, phone, name, id }: CardProps) => (
+const Card = ({ email, category_name, phone, name, id }: CardProps) => (
   <S.Wrapper>
     <S.InfoBox>
       <S.ContactName>
         <strong>{name}</strong>
-        {platform && <small>{platform}</small>}
+        {category_name && <small>{category_name}</small>}
       </S.ContactName>
       <span>{email}</span>
       <span>{phone}</span>
