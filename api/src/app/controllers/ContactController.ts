@@ -120,7 +120,7 @@ export const deleteContact = async (req: Request, res: Response) => {
   const { id } = req.params
 
   if (!isValidUUID(id)) {
-    return res.status(400).json({ error: 'Invalid user id' })
+    return res.status(400).json({ error: 'Invalid contact id' })
   }
 
   await ContactsRepository.delete(id)
