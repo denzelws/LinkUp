@@ -17,7 +17,7 @@ import { CardProps } from '../Card'
 export type ContactFormProps = {
   buttonLabel: string
   error?: boolean
-  onSubmit: (formData: CardProps) => void
+  onSubmit: (formData: CardProps) => Promise<void>
 }
 
 const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
@@ -27,6 +27,7 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
   const [categoryId, setCategoryId] = useState('')
   const [categories, setCategories] = useState<CategoriesProps[]>([])
   const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { errors, setError, removeError, getErrorMessageByFieldName } =
     useError()
@@ -47,15 +48,19 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
     loadCategories()
   }, [])
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    onSubmit({
+    setIsSubmitting(true)
+
+    await onSubmit({
       name,
       email,
       phone,
       categoryId
     })
+
+    setIsSubmitting(false)
   }
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +133,11 @@ const ContactForm = ({ buttonLabel, onSubmit }: ContactFormProps) => {
       </FormGroup>
 
       <S.ButtonContainer>
-        <Button size="fullWidth" disabled={!isFormValid}>
+        <Button
+          size="fullWidth"
+          disabled={!isFormValid}
+          isLoading={isSubmitting}
+        >
           {buttonLabel}
         </Button>
       </S.ButtonContainer>
