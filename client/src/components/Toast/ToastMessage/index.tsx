@@ -4,6 +4,7 @@ import xCircleIcon from '../../../public/img/circle-x.svg'
 import checkCircleIcon from '../../../public/img/check-circle.svg'
 
 export type ToastMessageProps = {
+  id: number
   text: string
   type?: 'default' | 'success' | 'danger'
 }

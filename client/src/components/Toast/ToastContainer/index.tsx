@@ -1,12 +1,44 @@
-import ToastMessage from '../ToastMessage'
+import { useEffect, useState } from 'react'
+import ToastMessage, { ToastMessageProps } from '../ToastMessage'
 import * as S from './styles'
 
+export interface AddToastEvent extends Event {
+  detail: {
+    type: 'default' | 'success' | 'danger'
+    text: string
+  }
+}
+
 const ToastContainer = () => {
+  const [messages, setMessages] = useState<ToastMessageProps[]>([])
+
+  useEffect(() => {
+    function handleAddToast(event: AddToastEvent) {
+      console.log(event)
+      const { type, text } = event.detail
+
+      setMessages((prevState) => [
+        ...prevState,
+        { id: Math.random(), type, text }
+      ])
+    }
+    document.addEventListener('addtoast', handleAddToast as EventListener)
+
+    return () => {
+      document.removeEventListener('addtoast', handleAddToast as EventListener)
+    }
+  }, [])
+
   return (
     <S.Container>
-      <ToastMessage text="Default toast" />
-      <ToastMessage text="Error toast" type="danger" />
-      <ToastMessage text="Success toast" type="success" />
+      {messages.map((message) => (
+        <ToastMessage
+          id={message.id}
+          key={message.id}
+          type={message.type}
+          text={message.text}
+        />
+      ))}
     </S.Container>
   )
 }

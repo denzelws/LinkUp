@@ -3,6 +3,7 @@ import PageHeader from '../../components/PageHeader'
 import ContactForm from '../../components/ContactForm'
 import { CardProps } from '../../components/Card'
 import contactsService from '../../services/ContactsService'
+import { toast } from '../../utils/toast'
 
 const NewContact = () => {
   const handleSubmit = async (formData: CardProps): Promise<void> => {
@@ -14,10 +15,17 @@ const NewContact = () => {
         category_id: formData.categoryId
       }
 
-      const response = await contactsService.createContact(contact)
-      console.log(response)
+      await contactsService.createContact(contact)
+
+      toast({
+        type: 'success',
+        text: 'Contato cadastrado com sucesso!'
+      })
     } catch {
-      alert('Ocorreu um erro ao cadastrar o contato!')
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao cadastrar o contato!'
+      })
     }
   }
   return (

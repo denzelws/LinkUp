@@ -22,8 +22,8 @@ export const Container = styled.div<ContainerProps>`
       margin-top: 1.2rem;
     }
 
-    strong {
-      margin-left: ${theme.spacings.xxsmall};
+    img {
+      margin-right: ${theme.spacings.xxsmall};
     }
   `}
 `

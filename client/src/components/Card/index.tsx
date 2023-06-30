@@ -8,6 +8,7 @@ export type CardProps = {
   id?: string
   name: string
   category_name?: string
+  categoryId?: string
   email: string
   phone: string
 }
