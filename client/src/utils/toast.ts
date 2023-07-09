@@ -1,15 +1,8 @@
-type ToastProps = {
-  type: string
-  text: string
-}
+import { AddToastEventProps } from '../components/Toast/ToastContainer'
+import { EventManager } from '../lib/EventManager'
 
-export const toast = ({ type, text }: ToastProps) => {
-  const event = new CustomEvent('addtoast', {
-    detail: {
-      type,
-      text
-    }
-  })
+export const toastEventManager = new EventManager()
 
-  document.dispatchEvent(event)
+export const toast = ({ type, text, duration }: AddToastEventProps) => {
+  toastEventManager.emit('addtoast', { type, text, duration })
 }
