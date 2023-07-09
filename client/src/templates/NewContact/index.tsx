@@ -1,21 +1,21 @@
+import { useRef } from 'react'
+
 import { Container } from '../../components/Container'
+import { CardProps } from '../../components/Card'
 import PageHeader from '../../components/PageHeader'
 import ContactForm from '../../components/ContactForm'
-import { CardProps } from '../../components/Card'
-import contactsService from '../../services/ContactsService'
+
 import { toast } from '../../utils/toast'
+import contactsService from '../../services/ContactsService'
 
 const NewContact = () => {
-  const handleSubmit = async (formData: CardProps): Promise<void> => {
-    try {
-      const contact = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        category_id: formData.categoryId
-      }
+  const contactFormRef = useRef<HTMLFormElement>(null)
 
+  const handleSubmit = async (contact: CardProps): Promise<void> => {
+    try {
       await contactsService.createContact(contact)
+
+      contactFormRef.current?.resetFields()
 
       toast({
         type: 'success',
@@ -31,7 +31,11 @@ const NewContact = () => {
   return (
     <Container>
       <PageHeader title="Novo Contato" />
-      <ContactForm buttonLabel="Cadastrar" onSubmit={handleSubmit} />
+      <ContactForm
+        ref={contactFormRef}
+        buttonLabel="Cadastrar"
+        onSubmit={handleSubmit}
+      />
     </Container>
   )
 }
