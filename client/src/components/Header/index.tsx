@@ -22,7 +22,7 @@ const Header = ({
   return (
     <S.Wrapper>
       <S.Logo>
-        Note<span>Pad</span>
+        Link<span>Up</span>
       </S.Logo>
 
       {!withoutInput && (
