@@ -1,24 +1,23 @@
-import ReactDOM from 'react-dom'
+import { Spinner } from '../Spinner'
+import ReactPortal from '../ReactPortal'
 
 import * as S from './styles'
-import { Spinner } from '../Spinner'
 
 type LoaderProps = {
   isLoading: boolean
 }
-
-const loaderRoot = document.getElementById('loader-root') as Element
 
 const Loader = ({ isLoading }: LoaderProps) => {
   if (!isLoading) {
     return null
   }
 
-  return ReactDOM.createPortal(
-    <S.Wrapper>
-      <Spinner size={90} />
-    </S.Wrapper>,
-    loaderRoot
+  return (
+    <ReactPortal containerId="loader-root">
+      <S.Wrapper>
+        <Spinner size={90} />
+      </S.Wrapper>
+    </ReactPortal>
   )
 }
 export default Loader
