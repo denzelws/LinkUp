@@ -9,7 +9,7 @@ export const OverlayBox = styled.div`
   justify-content: center;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(0.5rem);
-  position: absolute;
+  position: fixed;
   z-index: 30;
   width: 100%;
   height: 100%;
@@ -36,7 +36,7 @@ export const ButtonBox = styled.p`
     margin-top: ${theme.spacings.medium};
 
     button {
-      margin-left: ${theme.spacings.xxsmall};
+      margin-left: ${theme.spacings.small};
     }
   `}
 `
@@ -48,6 +48,10 @@ export const CancelButton = styled.button`
     color: ${theme.colors.gray};
     font-size: ${theme.font.sizes.medium};
     cursor: pointer;
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
   `}
 `
 
@@ -62,6 +66,6 @@ export const Title = styled.h1<Pick<ModalProps, 'danger'>>`
 
 export const WarningText = styled.p`
   ${({ theme }) => css`
-    margin-top: ${theme.spacings.xxsmall};
+    margin-top: ${theme.spacings.medium};
   `}
 `
