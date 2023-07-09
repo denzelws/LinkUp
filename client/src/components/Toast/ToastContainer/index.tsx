@@ -1,32 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import ToastMessage, { ToastMessageProps } from '../ToastMessage'
 import * as S from './styles'
+import { toastEventManager } from '../../../utils/toast'
 
-export interface AddToastEvent extends Event {
-  detail: {
-    type: 'default' | 'success' | 'danger'
-    text: string
-  }
+export type AddToastEventProps = {
+  type: 'default' | 'success' | 'danger'
+  text: string
+  duration?: number
 }
 
 const ToastContainer = () => {
   const [messages, setMessages] = useState<ToastMessageProps[]>([])
 
   useEffect(() => {
-    function handleAddToast(event: AddToastEvent) {
-      console.log(event)
-      const { type, text } = event.detail
-
+    function handleAddToast({ type, text, duration }: AddToastEventProps) {
       setMessages((prevState) => [
         ...prevState,
-        { id: Math.random(), type, text }
+        { id: Math.random(), type, text, duration }
       ])
     }
-    document.addEventListener('addtoast', handleAddToast as EventListener)
+
+    toastEventManager.on('addtoast', handleAddToast)
 
     return () => {
-      document.removeEventListener('addtoast', handleAddToast as EventListener)
+      toastEventManager.removeListener('addtoast', handleAddToast)
     }
+  }, [])
+
+  const handleRemoveMessage = useCallback((id: number) => {
+    setMessages((prevState) => prevState.filter((message) => message.id !== id))
   }, [])
 
   return (
@@ -37,6 +39,8 @@ const ToastContainer = () => {
           key={message.id}
           type={message.type}
           text={message.text}
+          duration={message.duration}
+          onRemoveMessage={handleRemoveMessage}
         />
       ))}
     </S.Container>
