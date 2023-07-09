@@ -50,8 +50,8 @@ export const Wrapper = styled.button<WrapperProps>`
     }
 
     &[disabled] {
-      background: #ccc;
-      cursor: default;
+      background: #ccc !important;
+      cursor: default !important;
     }
 
     ${!!size && wrapperModifiers[size](theme)}

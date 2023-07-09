@@ -8,7 +8,7 @@ export type ButtonProps = {
   size?: 'small' | 'fullWidth'
   isLoading?: boolean
   onClick?: () => void
-} & ModalProps
+} & Pick<ModalProps, 'danger'>
 
 const Button = ({
   children,
