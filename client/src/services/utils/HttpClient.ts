@@ -3,8 +3,13 @@ import APIError from '../../errors/ApiError'
 import delay from '../../utils/delay'
 
 type HttpClientProps = {
-  get: (path: string, options?: OptionsProps) => Promise<CardProps[]>
+  get: (
+    path: string,
+    options?: OptionsProps
+  ) => Promise<CardProps[] | CardProps>
   post: (path: string, options?: OptionsProps) => Promise<CardProps>
+  put: (path: string, options?: OptionsProps) => Promise<CardProps>
+  deleteContact: (path: string, options?: OptionsProps) => Promise<CardProps>
 }
 
 type OptionsProps = {
@@ -14,7 +19,10 @@ type OptionsProps = {
 }
 
 function createHttpClient(baseURL: string): HttpClientProps {
-  function get(path: string, options: OptionsProps = {}): Promise<CardProps[]> {
+  function get(
+    path: string,
+    options: OptionsProps = {}
+  ): Promise<CardProps[] | CardProps> {
     return makeRequest(path, {
       method: 'GET',
       headers: options.headers
@@ -24,6 +32,23 @@ function createHttpClient(baseURL: string): HttpClientProps {
   function post(path: string, options: OptionsProps = {}): Promise<CardProps> {
     return makeRequest(path, {
       method: 'POST',
+      ...options
+    })
+  }
+
+  function put(path: string, options: OptionsProps = {}): Promise<CardProps> {
+    return makeRequest(path, {
+      method: 'PUT',
+      ...options
+    })
+  }
+
+  function deleteContact(
+    path: string,
+    options: OptionsProps = {}
+  ): Promise<CardProps> {
+    return makeRequest(path, {
+      method: 'DELETE',
       ...options
     })
   }
@@ -65,7 +90,9 @@ function createHttpClient(baseURL: string): HttpClientProps {
 
   return {
     get,
-    post
+    post,
+    put,
+    deleteContact
   }
 }
 
