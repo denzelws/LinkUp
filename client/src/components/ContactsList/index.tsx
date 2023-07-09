@@ -47,6 +47,16 @@ const ContactsList = ({
     }
   }, [orderBy, onContactCountChange])
 
+  const handleDeleteContact = useCallback(
+    (contactId: string) => {
+      setContacts((prevContacts) =>
+        prevContacts.filter((contact) => contact.id !== contactId)
+      )
+      onContactCountChange(contacts.length - 1)
+    },
+    [onContactCountChange, contacts]
+  )
+
   useEffect(() => {
     loadContacts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +134,10 @@ const ContactsList = ({
               <S.ArrowIcon orderby={orderBy} />
             </S.ListHeader>
           )}
-          <CardSlider contacts={filteredContacts} />
+          <CardSlider
+            contacts={filteredContacts}
+            onDeleteContact={handleDeleteContact}
+          />
         </S.CardWrapper>
       )}
     </S.Wrapper>
