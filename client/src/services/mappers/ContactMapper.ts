@@ -3,6 +3,7 @@ import { CardProps } from '../../components/Card'
 const ContactMapper = {
   toPersistance: (domainContact: CardProps) => {
     return {
+      id: domainContact.id,
       name: domainContact.name,
       email: domainContact.email,
       phone: domainContact.phone,
