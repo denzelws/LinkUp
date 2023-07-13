@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Button from '../Button'
 import ReactPortal from '../ReactPortal'
 
@@ -26,7 +27,26 @@ const Modal = ({
   onCancel,
   onConfirm
 }: ModalProps) => {
-  if (!visible) {
+  const [shouldRender, setShouldRender] = useState(visible)
+
+  useEffect(() => {
+    if (visible) {
+      setShouldRender(true)
+    }
+
+    let timeoutId: NodeJS.Timeout
+    if (!visible) {
+      timeoutId = setTimeout(() => {
+        setShouldRender(false)
+      }, 300)
+    }
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [visible])
+
+  if (!shouldRender) {
     return null
   }
 
@@ -40,8 +60,8 @@ const Modal = ({
 
   return (
     <ReactPortal containerId="modal-root">
-      <S.OverlayBox>
-        <S.ModalContainer>
+      <S.OverlayBox isLeaving={!visible}>
+        <S.ModalContainer isLeaving={!visible}>
           <S.Title danger={danger}>{title}</S.Title>
           <S.WarningText>{children}</S.WarningText>
           <S.ButtonBox>
