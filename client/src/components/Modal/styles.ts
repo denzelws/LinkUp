@@ -3,7 +3,7 @@ import { ModalProps } from '.'
 
 import { darken } from 'polished'
 
-type ModalStyleProps = {
+export type ModalStyleProps = {
   isLeaving: boolean
 }
 
