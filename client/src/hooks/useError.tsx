@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export type ErrorProps = {
   field: string
@@ -15,25 +15,31 @@ export type HookProps = {
 export const useError = (): HookProps => {
   const [errors, setErrors] = useState<{ field: string; message: string }[]>([])
 
-  function setError({ field, message }: ErrorProps) {
-    const emailAlreadyExists = errors.find((error) => error.field === 'email')
+  const setError = useCallback(
+    ({ field, message }: ErrorProps) => {
+      const emailAlreadyExists = errors.find((error) => error.field === 'email')
 
-    if (emailAlreadyExists) {
-      return
-    }
+      if (emailAlreadyExists) {
+        return
+      }
 
-    setErrors((prevState) => [...prevState, { field, message }])
-  }
+      setErrors((prevState) => [...prevState, { field, message }])
+    },
+    [errors]
+  )
 
-  function removeError(fieldName: string) {
+  const removeError = useCallback((fieldName: string) => {
     setErrors((prevState) =>
       prevState.filter((error) => error.field !== fieldName)
     )
-  }
+  }, [])
 
-  function getErrorMessageByFieldName(fieldName: string) {
-    return errors.find((error) => error.field === fieldName)?.message || ''
-  }
+  const getErrorMessageByFieldName = useCallback(
+    (fieldName: string) => {
+      return errors.find((error) => error.field === fieldName)?.message || ''
+    },
+    [errors]
+  )
 
   return {
     errors,
