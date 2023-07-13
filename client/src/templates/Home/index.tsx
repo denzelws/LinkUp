@@ -1,19 +1,16 @@
-import { useState } from 'react'
 import ContactsList from '../../components/ContactsList'
 import { Container } from '../../components/Container'
 import Header from '../../components/Header'
 
+import useHome from '../Home/useHome'
+
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [contactCount, setContactCount] = useState(0)
-
-  const handleChangeSearchTerm = (newSearchTerm: string) => {
-    setSearchTerm(newSearchTerm)
-  }
-
-  const handleContactCountChange = (count: number) => {
-    setContactCount(count)
-  }
+  const {
+    searchTerm,
+    contactCount,
+    handleChangeSearchTerm,
+    handleContactCountChange
+  } = useHome()
 
   return (
     <Container>
