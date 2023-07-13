@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import { ArrowLeftShort } from '@styled-icons/bootstrap/ArrowLeftShort'
 
 type DetailsProps = {
   hasError: boolean
@@ -63,33 +62,6 @@ export const CardWrapper = styled.div`
   }
 `
 
-export const EmptyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-`
-
-export const EmptyText = styled.p`
-  ${({ theme }) => css`
-    margin-top: ${theme.spacings.xxsmall};
-    color: ${theme.colors.gray};
-
-    strong {
-      color: ${theme.colors.primaryMain};
-    }
-  `}
-`
-
-export const ListHeader = styled.header`
-  ${({ theme }) => css`
-    color: ${theme.colors.blue};
-    font-size: ${theme.font.sizes.large};
-
-    cursor: pointer;
-  `}
-`
-
 export const CardBox = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -106,61 +78,4 @@ export const Card = styled.div`
   border: 0.1rem solid red;
   height: 6rem;
   padding: 1.5rem 0;
-`
-
-type IconProps = {
-  orderby: string
-}
-
-export const ArrowIcon = styled(ArrowLeftShort)<IconProps>`
-  ${({ theme, orderby }) => css`
-    margin-right: 0.2rem;
-    justify-content: center;
-    width: 3rem;
-    color: ${theme.colors.blue};
-    transform: ${orderby === 'asc' ? 'rotate(90deg)' : 'rotate(270deg)'};
-    transition: transform 0.2s ease-in;
-  `}
-`
-
-export const ErrorContainer = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    width: 10rem;
-  }
-`
-
-export const InfoBox = styled.div`
-  ${({ theme }) => css`
-    margin-left: ${theme.spacings.small};
-  `}
-`
-
-export const WarningText = styled.strong`
-  ${({ theme }) => css`
-    display: block;
-    font-size: ${theme.font.sizes.xlarge};
-    color: ${theme.colors.danger.main};
-    margin-bottom: ${theme.spacings.xxsmall};
-  `}
-`
-
-export const NotFoundContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-`
-
-export const ImageWrapper = styled.div`
-  img {
-    width: 5rem;
-  }
-`
-
-export const NotFoundMessage = styled.span`
-  ${({ theme }) => css`
-    margin-left: ${theme.spacings.xsmall};
-    color: ${theme.colors.gray};
-    word-break: break-word;
-  `}
 `
