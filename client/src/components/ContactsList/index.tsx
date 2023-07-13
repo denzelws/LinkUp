@@ -1,80 +1,43 @@
 import { Link } from 'react-router-dom'
-import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { CardProps } from '../Card'
 import CardSlider from '../CardSlider'
 import Loader from '../Loader'
 
-import contactsService from '../../services/ContactsService'
-import sadImage from '../../public/img/sad.svg'
-import emptyBox from '../../public/img/emptybox.svg'
-import questionQuery from '../../public/img/query.svg'
+import useContactsList, {
+  ContactsListProps
+} from '../ContactsList/useContactsList'
+
+import { ErrorStatus } from '../ErrorStatus'
+import { EmptyList } from '../EmptyList'
 
 import * as S from './styles'
-import Button from '../Button'
-
-type ContactsListProps = {
-  searchTerm: string
-  onContactCountChange: (count: number) => void
-}
+import { SearchNotFound } from '../SearchNotFound'
+import { ListHeader } from '../ListHeader'
 
 const ContactsList = ({
   searchTerm,
   onContactCountChange
 }: ContactsListProps) => {
-  const [contacts, setContacts] = useState<CardProps[]>([])
-  const [orderBy, setOrderBy] = useState('asc')
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasError, setHasError] = useState(false)
+  const {
+    isLoading,
+    orderBy,
+    hasError,
+    contacts,
+    filteredContacts,
+    handleDeleteContact,
+    handleToggleOrderBy,
+    handleTryAgain
+  } = useContactsList({ searchTerm, onContactCountChange })
 
-  const filteredContacts = useMemo(() => {
-    return contacts.filter((contact: CardProps) => {
-      return contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-    })
-  }, [contacts, searchTerm])
-
-  const loadContacts = useCallback(async () => {
-    try {
-      setIsLoading(true)
-      const contactsList = await contactsService.listContacts(orderBy)
-      setHasError(false)
-      setContacts(contactsList)
-      onContactCountChange(contactsList.length)
-    } catch (error) {
-      setHasError(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [orderBy, onContactCountChange])
-
-  const handleDeleteContact = useCallback(
-    (contactId: string) => {
-      setContacts((prevContacts) =>
-        prevContacts.filter((contact) => contact.id !== contactId)
-      )
-      onContactCountChange(contacts.length - 1)
-    },
-    [onContactCountChange, contacts]
-  )
-
-  useEffect(() => {
-    loadContacts()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleToggleOrderBy = () => {
-    setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'))
-  }
-
-  const handleTryAgain = () => {
-    loadContacts()
-  }
+  const hasContacts = contacts.length > 0
+  const isListEmpty = !hasError && !isLoading && !hasContacts
+  const isSearchEmpty = !hasError && hasContacts && filteredContacts.length < 1
 
   return (
     <S.Wrapper>
       <Loader isLoading={isLoading} />
       <S.Details hasError={hasError} contactsLength={contacts.length}>
-        {!hasError && contacts.length > 0 && (
+        {!hasError && hasContacts && (
           <S.Contacts>
             {filteredContacts.length}
             {filteredContacts.length === 1 ? ' contato' : ' contatos'}
@@ -85,54 +48,17 @@ const ContactsList = ({
         </S.Button>
       </S.Details>
 
-      {hasError && (
-        <S.ErrorContainer>
-          <img src={sadImage} alt="Uma imagem mostrando uma cara triste" />
-          <S.InfoBox>
-            <S.WarningText>
-              Ocorreu um erro ao obter seus contatos
-            </S.WarningText>
-            <Button onClick={handleTryAgain}>Tentar novamente</Button>
-          </S.InfoBox>
-        </S.ErrorContainer>
-      )}
+      {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
+      {isListEmpty && <EmptyList />}
+      {isSearchEmpty && <SearchNotFound searchTerm={searchTerm} />}
 
-      {!hasError && (
+      {hasContacts && (
         <S.CardWrapper>
-          {contacts.length < 1 && !isLoading && (
-            <S.EmptyContainer>
-              <img
-                src={emptyBox}
-                alt="Uma ilustração demonstrando uma caixa vazia"
-              />
-              <S.EmptyText>
-                Você ainda não tem nenhum contato cadastrado! Clique <br /> no
-                botão
-                <strong> "Novo Contato"</strong> à cima para cadastrar o seu
-                primeiro!
-              </S.EmptyText>
-            </S.EmptyContainer>
-          )}
-
-          {contacts.length > 0 && filteredContacts.length < 1 && (
-            <S.NotFoundContainer>
-              <S.ImageWrapper>
-                <img
-                  src={questionQuery}
-                  alt="A imagem mostra um icone de pesquisa com um ponto de interrogação"
-                />
-              </S.ImageWrapper>
-              <S.NotFoundMessage>
-                Nao foi encontrado resultados para <strong>{searchTerm}</strong>
-              </S.NotFoundMessage>
-            </S.NotFoundContainer>
-          )}
-
           {filteredContacts.length > 0 && (
-            <S.ListHeader onClick={handleToggleOrderBy}>
-              Nome
-              <S.ArrowIcon orderby={orderBy} />
-            </S.ListHeader>
+            <ListHeader
+              orderBy={orderBy}
+              handleToggleOrderBy={handleToggleOrderBy}
+            />
           )}
           <CardSlider
             contacts={filteredContacts}
