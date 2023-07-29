@@ -15,7 +15,6 @@ export type AddToastEventProps = {
 const ToastContainer = () => {
   const {
     handleRemoveItems: handleRemoveMessage,
-    handleAnimationEnd,
     renderList,
     setItems: setMessages
   } = useAnimatedList()
@@ -30,7 +29,6 @@ const ToastContainer = () => {
           text,
           duration,
           onRemoveMessage: handleRemoveMessage,
-          onAnimationEnd: handleAnimationEnd,
           isLeaving: false
         }
       ])
@@ -41,11 +39,11 @@ const ToastContainer = () => {
     return () => {
       toastEventManager.removeListener('addtoast', handleAddToast)
     }
-  }, [handleAnimationEnd, handleRemoveMessage, setMessages])
+  }, [handleRemoveMessage, setMessages])
 
   return (
     <S.Container>
-      {renderList((message, { isLeaving }) => (
+      {renderList((message, { isLeaving, animatedRef }) => (
         <ToastMessage
           id={message.id}
           key={message.id}
@@ -54,7 +52,7 @@ const ToastContainer = () => {
           duration={message.duration}
           onRemoveMessage={handleRemoveMessage}
           isLeaving={isLeaving}
-          onAnimationEnd={handleAnimationEnd}
+          animatedRef={animatedRef}
         />
       ))}
     </S.Container>
