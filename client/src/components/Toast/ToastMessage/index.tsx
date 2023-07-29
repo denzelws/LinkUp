@@ -2,7 +2,7 @@ import * as S from './styles'
 
 import xCircleIcon from '../../../public/img/circle-x.svg'
 import checkCircleIcon from '../../../public/img/check-circle.svg'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export type ToastMessageProps = {
   id: number
@@ -10,6 +10,8 @@ export type ToastMessageProps = {
   type?: 'default' | 'success' | 'danger'
   duration?: number
   onRemoveMessage: (id: number) => void
+  onAnimationEnd: (id: number) => void
+  isLeaving: boolean
 }
 
 const ToastMessage = ({
@@ -17,8 +19,28 @@ const ToastMessage = ({
   text,
   type = 'default',
   duration,
-  onRemoveMessage
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onRemoveMessage,
+  isLeaving,
+  onAnimationEnd
 }: ToastMessageProps) => {
+  const animatedElementRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleAnimationEnd() {
+      onAnimationEnd(id)
+    }
+
+    const elementRef = animatedElementRef.current
+    if (isLeaving) {
+      elementRef?.addEventListener('animationend', handleAnimationEnd)
+    }
+
+    return () => {
+      elementRef?.removeEventListener('animationend', handleAnimationEnd)
+    }
+  }, [id, isLeaving, onAnimationEnd])
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onRemoveMessage(id)
@@ -39,6 +61,8 @@ const ToastMessage = ({
       onClick={handleRemoveToast}
       tabIndex={0}
       role="button"
+      isLeaving={isLeaving}
+      ref={animatedElementRef}
     >
       {type === 'danger' && <img src={xCircleIcon} />}
       {type === 'success' && <img src={checkCircleIcon} />}

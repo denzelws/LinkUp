@@ -3,23 +3,35 @@ import { ModalProps } from '.'
 
 import { darken } from 'polished'
 
-export type ModalStyleProps = {
+type ModalStyleProps = {
   isLeaving: boolean
 }
 
 const fadeIn = keyframes`
-from { opacity: 0; }
-to { opacity: 1; }
+from {
+ opacity: 0;
+}
+
+to {
+opacity: 1;
+}
 `
 
 const fadeOut = keyframes`
 from { opacity: 1; }
 to { opacity: 0; }
 `
+
 const scaleIn = keyframes`
-from { transform: scale(0); }
-to { transform: scale(1); }
+from {
+  transform: scale(0)
+}
+
+to {
+  transform: scale(1)
+}
 `
+
 const scaleOut = keyframes`
 from { transform: scale(1); }
 to { transform: scale(0); }
@@ -30,14 +42,7 @@ export const OverlayBox = styled.div<ModalStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: ${isLeaving
-        ? css`
-            ${fadeOut}, 0.2s
-          `
-        : css`
-            ${fadeIn}, 0.3s
-          `}
-      forwards;
+    animation: ${fadeIn}, 0.3s forwards;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(0.5rem);
     position: fixed;
@@ -46,6 +51,11 @@ export const OverlayBox = styled.div<ModalStyleProps>`
     height: 100%;
     top: 0;
     left: 0;
+
+    ${isLeaving &&
+    css`
+      animation: ${fadeOut} 0.2s forwards;
+    `}
   `}
 `
 
@@ -54,17 +64,15 @@ export const ModalContainer = styled.div<ModalStyleProps>`
     width: 100%;
     max-width: 45rem;
     background: ${theme.colors.white};
-    animation: ${isLeaving
-        ? css`
-            ${scaleOut} 0.2s
-          `
-        : css`
-            ${scaleIn} 0.3s
-          `}
-      forwards;
     border-radius: 0.4rem;
     box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.04);
     padding: ${theme.spacings.small};
+    animation: ${scaleIn} 0.3s;
+
+    ${isLeaving &&
+    css`
+      animation: ${scaleOut} 0.2s forwards;
+    `}
   `}
 `
 

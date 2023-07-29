@@ -2,9 +2,10 @@ type EventListenerProps = (payload: PayloadProps) => void
 
 type PayloadProps = {
   text: string
-  type: string
+  type: 'default' | 'success' | 'danger'
   duration?: number
 }
+
 // { [event: string]: EventListenerProps[] }
 export class EventManager {
   private listeners: Map<any, any>

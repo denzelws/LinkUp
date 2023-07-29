@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
-import ToastMessage, { ToastMessageProps } from '../ToastMessage'
-import * as S from './styles'
+import { useEffect } from 'react'
+
+import { useAnimatedList } from '../../../hooks/useAnimatedList'
 import { toastEventManager } from '../../../utils/toast'
+import ToastMessage from '../ToastMessage'
+
+import * as S from './styles'
 
 export type AddToastEventProps = {
   type: 'default' | 'success' | 'danger'
@@ -10,13 +13,26 @@ export type AddToastEventProps = {
 }
 
 const ToastContainer = () => {
-  const [messages, setMessages] = useState<ToastMessageProps[]>([])
+  const {
+    handleRemoveItems: handleRemoveMessage,
+    handleAnimationEnd,
+    renderList,
+    setItems: setMessages
+  } = useAnimatedList()
 
   useEffect(() => {
     function handleAddToast({ type, text, duration }: AddToastEventProps) {
       setMessages((prevState) => [
         ...prevState,
-        { id: Math.random(), type, text, duration }
+        {
+          id: Math.random(),
+          type,
+          text,
+          duration,
+          onRemoveMessage: handleRemoveMessage,
+          onAnimationEnd: handleAnimationEnd,
+          isLeaving: false
+        }
       ])
     }
 
@@ -25,15 +41,11 @@ const ToastContainer = () => {
     return () => {
       toastEventManager.removeListener('addtoast', handleAddToast)
     }
-  }, [])
-
-  const handleRemoveMessage = useCallback((id: number) => {
-    setMessages((prevState) => prevState.filter((message) => message.id !== id))
-  }, [])
+  }, [handleAnimationEnd, handleRemoveMessage, setMessages])
 
   return (
     <S.Container>
-      {messages.map((message) => (
+      {renderList((message, { isLeaving }) => (
         <ToastMessage
           id={message.id}
           key={message.id}
@@ -41,6 +53,8 @@ const ToastContainer = () => {
           text={message.text}
           duration={message.duration}
           onRemoveMessage={handleRemoveMessage}
+          isLeaving={isLeaving}
+          onAnimationEnd={handleAnimationEnd}
         />
       ))}
     </S.Container>
