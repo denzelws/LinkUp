@@ -2,7 +2,7 @@ import * as S from './styles'
 
 import xCircleIcon from '../../../public/img/circle-x.svg'
 import checkCircleIcon from '../../../public/img/check-circle.svg'
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 
 export type AnimatedRefProps = {
   [key: string]: any
@@ -58,4 +58,4 @@ const ToastMessage = ({
   )
 }
 
-export default ToastMessage
+export default memo(ToastMessage)
