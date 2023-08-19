@@ -23,27 +23,46 @@ export const useAnimatedList = (initialValue = []) => {
   const animatedRefs = useRef(new Map())
   const animationEndListeners = useRef(new Map())
 
-  const handleAnimationEnd = useCallback((id: number) => {
-    setItems((prevState) => prevState.filter((item) => item.id !== id))
+  const handleAnimationEnd = useCallback((itemId: number) => {
+    const removeListener = animationEndListeners.current.get(itemId)
+    removeListener()
+
+    animationEndListeners.current.delete(itemId)
+    animatedRefs.current.delete(itemId)
+
+    console.log({ animationEndListeners, animatedRefs })
+
+    setItems((prevState) => prevState.filter((item) => item.id !== itemId))
     setPendingRemovalItemsIds((prevState) =>
-      prevState.filter((itemId) => itemId !== id)
+      prevState.filter((id) => itemId !== id)
     )
   }, [])
 
   useEffect(() => {
     pendingRemovalItemsIds.forEach((itemId) => {
       const animatedRef = animatedRefs.current.get(itemId)
+      const animatedElement = animatedRef?.current
       const alreadyHasListeners = animationEndListeners.current.has(itemId)
 
-      if (animatedRef?.current && !alreadyHasListeners) {
-        animationEndListeners.current.set(itemId, true)
+      if (animatedElement && !alreadyHasListeners) {
+        const onAnimationEnd = () => handleAnimationEnd(itemId)
+        const removeListener = () => {
+          animatedElement.removeEventListener('animationend', onAnimationEnd)
+        }
 
-        animatedRef.current.addEventListener('animationend', () => {
-          handleAnimationEnd(itemId)
-        })
+        animatedElement.addEventListener('animationend', onAnimationEnd)
+        animationEndListeners.current.set(itemId, removeListener)
       }
     })
   }, [handleAnimationEnd, pendingRemovalItemsIds])
+
+  useEffect(() => {
+    const removeListeners = animationEndListeners.current
+
+    return () => {
+      removeListeners.forEach((removeListener) => removeListener())
+    }
+  }, [])
 
   const handleRemoveItems = useCallback((id: number) => {
     setPendingRemovalItemsIds((prevState) => [...prevState, id])
